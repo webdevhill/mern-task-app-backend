@@ -10,8 +10,16 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-app.use(cors({
-    origin: ['http://localhost:5000/', 'https://mern-task-app-1b6x-api.onrender.com']
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    next();
+  })
+app.use(
+    cors({
+    origin: ['http://localhost:3000/', 'https://mern-task-app-1b6x.onrender.com'],
+    credentials: true,
 }));
 app.use('/api/tasks', taskRoutes);
 
